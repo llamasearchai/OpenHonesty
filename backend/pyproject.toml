@@ -5,7 +5,7 @@ description = "A comprehensive platform for evaluating and training language mod
 authors = [
     {name = "Nik Jois", email = "nikjois@llamasearch.ai"}
 ]
-readme = "../README.md"
+readme = "README.md"
 license = {text = "MIT"}
 requires-python = ">=3.9,<3.12"
 classifiers = [
