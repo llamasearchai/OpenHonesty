@@ -1,16 +1,35 @@
-[tool.poetry]
+[project]
 name = "honesty-platform"
 version = "0.1.0"
 description = "A comprehensive platform for evaluating and training language models for honesty and truthfulness."
-authors = ["Nik Jois <nikjois@llamasearch.ai>"]
-readme = "README.md"
-packages = [{include = "honesty"}]
+authors = [
+    {name = "Nik Jois", email = "nikjois@llamasearch.ai"}
+]
+readme = "../README.md"
+license = {text = "MIT"}
+requires-python = ">=3.9,<3.12"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Intended Audience :: Science/Research",
+    "Intended Audience :: Developers",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Software Development :: Libraries :: Python Modules"
+]
+dynamic = ["dependencies"]
 
-[tool.poetry.scripts]
+[project.scripts]
 honesty = "honesty.cli.main:main"
 
+[tool.poetry]
+packages = [{include = "honesty"}]
+
 [tool.poetry.dependencies]
-python = "^3.9"
+python = ">=3.9,<3.12"
 torch = "2.0.1"
 transformers = "4.30.2"
 datasets = "2.12.0"
@@ -43,7 +62,7 @@ isort = "5.12.0"
 mypy = "1.3.0"
 pylint = "2.17.4"
 flake8 = "6.0.0"
-sphinx = "7.0.1"
+sphinx = "6.2.1"
 sphinx-rtd-theme = "1.2.1"
 pre-commit = "3.3.2"
 
