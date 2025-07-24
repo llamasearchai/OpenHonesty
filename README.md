@@ -1,5 +1,10 @@
 # Model Honesty Research Platform
 
+[![CI](https://github.com/llamasearchai/OpenHonesty/workflows/Backend%20CI/badge.svg)](https://github.com/llamasearchai/OpenHonesty/actions)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+
 A comprehensive command-line platform for evaluating and improving the truthfulness and honesty of language models, featuring tools for truthfulness evaluation, hallucination detection, and honesty training.
 
 ## Features

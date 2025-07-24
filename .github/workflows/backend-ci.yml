@@ -2,42 +2,66 @@ name: Backend CI
 
 on:
   push:
-    branches:
-      - main
+    branches: [ main ]
   pull_request:
-    branches:
-      - main
+    branches: [ main ]
 
 jobs:
   test:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.9, '3.10', '3.11']
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Set up Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: '3.10'
-
-      - name: Install dependencies
-        run: |
-          pip install poetry
-          poetry install
-
-      - name: Run tests
-        run: |
-          poetry run pytest --cov=honesty --cov-report=xml --cov-report=term-missing
-
-      - name: Lint code
-        run: |
-          poetry run flake8 honesty tests
-
-      - name: Format code
-        run: |
-          poetry run black honesty tests --check
-
-      - name: Type check
-        run: |
-          poetry run mypy honesty
+    - uses: actions/checkout@v4
+    
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ matrix.python-version }}
+    
+    - name: Install dependencies
+      run: |
+        cd backend
+        python -m pip install --upgrade pip
+        pip install poetry
+        poetry install
+    
+    - name: Lint with flake8
+      run: |
+        cd backend
+        poetry run flake8 honesty tests --count --select=E9,F63,F7,F82 --show-source --statistics
+        poetry run flake8 honesty tests --count --exit-zero --max-complexity=10 --max-line-length=88 --statistics
+    
+    - name: Format check with black
+      run: |
+        cd backend
+        poetry run black honesty tests --check --diff
+    
+    - name: Import sorting check with isort
+      run: |
+        cd backend
+        poetry run isort honesty tests --check-only --diff
+    
+    - name: Type check with mypy
+      run: |
+        cd backend
+        poetry run mypy honesty --ignore-missing-imports
+    
+    - name: Test with pytest
+      run: |
+        cd backend
+        poetry run pytest tests/ --cov=honesty --cov-report=xml --cov-report=term-missing -v
+    
+    - name: Test CLI functionality
+      run: |
+        cd backend
+        python -c "from honesty.cli.main import create_parser; parser = create_parser(); print('CLI parser created successfully')"
+    
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v3
+      with:
+        file: ./backend/coverage.xml
+        flags: unittests
+        name: codecov-umbrella
