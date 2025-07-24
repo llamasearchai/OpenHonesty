@@ -1,0 +1,43 @@
+name: Backend CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: |
+          pip install poetry
+          poetry install
+
+      - name: Run tests
+        run: |
+          poetry run pytest --cov=honesty --cov-report=xml --cov-report=term-missing
+
+      - name: Lint code
+        run: |
+          poetry run flake8 honesty tests
+
+      - name: Format code
+        run: |
+          poetry run black honesty tests --check
+
+      - name: Type check
+        run: |
+          poetry run mypy honesty
