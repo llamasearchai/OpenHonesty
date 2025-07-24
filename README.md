@@ -1,3 +1,5 @@
+![OpenHonesty Logo](OpenHonesty.png)
+
 # Model Honesty Research Platform
 
 [![CI](https://github.com/llamasearchai/OpenHonesty/workflows/Backend%20CI/badge.svg)](https://github.com/llamasearchai/OpenHonesty/actions)
